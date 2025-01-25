@@ -1,0 +1,39 @@
+direction: down
+
+clients: Clients {
+  shape: person
+  style: {
+    multiple: true
+  }
+}
+
+db1: DB1 {
+  shape: cylinder
+  near: center-left
+  style: {
+    stroke: red
+    stroke-dash: 3
+    font-color: red
+  }
+}
+
+db2: DB2 {
+  shape: cylinder
+}
+
+replicas: Replicas {
+  label.near: bottom-center
+
+  db3: DB3 {
+    shape: cylinder
+  }
+}
+
+db2 -> replicas.db3: {
+  style: {
+    stroke-dash: 3
+  }
+}
+
+clients -> db2: Read/Write
+clients -> replicas: Read

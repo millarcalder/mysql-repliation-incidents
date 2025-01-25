@@ -1,0 +1,68 @@
+version: '3.1'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: dev
+    networks:
+      - mysql-cluster
+    command: 'sh -c "echo \"Container started\" && while sleep 1; do :; done"'
+
+  db1:
+    container_name: db1
+    image: mysql:8.0
+    restart: always
+    command: --log-replica-updates=OFF
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: library
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+    networks:
+      - mysql-cluster
+  
+  db2:
+    container_name: db2
+    image: mysql:8.0
+    restart: always
+    command: --log-replica-updates=OFF
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: library
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+    networks:
+      - mysql-cluster
+  
+  db3:
+    container_name: db3
+    image: mysql:8.0
+    restart: always
+    command: --log-replica-updates=OFF
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: library
+    ports:
+      - "3308:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+    networks:
+      - mysql-cluster
+
+networks:
+  mysql-cluster:
