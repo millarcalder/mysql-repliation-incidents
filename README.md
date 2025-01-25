@@ -1,8 +1,8 @@
-# MySQL Replication
+<h1 align="center">MySQL Replication Incidents<br></h1>
 
-I wrote this repository for my own educational purposes, it is intended to simulate different incidents with a simple MySQL replica setup.
+<h4 align="center">This repository is for my own educational purposes, it is intended to simulate different incidents with a simple MySQL replica setup.</h4>
 
-*This project is using binary log replication*
+> A simple MySQL cluster as shown in the diagram below is run using docker compose and there is documentation on how to simulate some incidents and how to resolve them.
 
 ![mysql cluster](docs/diagrams/mysql_cluster.svg)
 
