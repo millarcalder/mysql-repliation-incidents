@@ -18,6 +18,15 @@ Reccommended
  - [Docker Desktop](https://docs.docker.com/desktop/)
  - [DBeaver](https://dbeaver.io/) or similar database tool
 
+### MySQL Details
+|                    |           |
+|--------------------| ----------|
+| Version            | 8.0       |
+| Replication Format | row-based |
+| Replication Mode   | GTID      |
+
+[Official MySQL replication documentation](https://dev.mysql.com/doc/refman/8.0/en/replication.html)
+
 ### Running
 
 ```bash

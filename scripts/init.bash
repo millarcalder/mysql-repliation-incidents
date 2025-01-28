@@ -9,7 +9,7 @@ GRANT REPLICATION SLAVE ON *.* TO 'replica'; \
 mysql -u root -psecret -h db1 -P 3306 < /scripts/data.sql
 
 # Fetch the name of the binary log file
-binlog_file=$(mysql -u root -psecret -h db1 -P 3306 -e "SHOW MASTER STATUS" 2> /dev/null | awk '/File:/ {print $2}')
+# binlog_file=$(mysql -u root -psecret -h db1 -P 3306 -e "SHOW MASTER STATUS" 2> /dev/null | awk '/File:/ {print $2}')
 
 # Setup the replica DBs
 replication_servers=(2 3)
@@ -20,9 +20,7 @@ for replica in ${replication_servers[@]}; do
         SOURCE_HOST='db1', \
         SOURCE_USER='replica', \
         SOURCE_PASSWORD='secret', \
-        SOURCE_LOG_FILE='$binlog_file', \
-        SOURCE_LOG_POS=0; \
+        SOURCE_AUTO_POSITION = 1; \
     START REPLICA; \
     "
 done
-

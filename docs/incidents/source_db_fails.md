@@ -15,7 +15,9 @@ Uh oh your source database is down! Don't worry, it's easy to replace it with on
 STOP REPLICA IO_THREAD;
 SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
 
--- Conenct to DB2 (the new source)
+-- Connect to DB2
+STOP REPLICA IO_THREAD;
+SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
 STOP REPLICA;
 RESET MASTER;
 
@@ -39,16 +41,12 @@ It's easy to configure your old source database as a replica. But maybe your old
 4. Change replication source for all replicas
 
 ```sql
--- Connect to DB2
-SHOW MASTER STATUS; -- Fetch the binlog file, it might of changed
-
 -- Connect to DB1
 CHANGE REPLICATION SOURCE TO
     SOURCE_HOST='db2',
     SOURCE_USER='replica',
     SOURCE_PASSWORD='secret',
-    SOURCE_LOG_FILE='<<BINLOG_FILE>>',
-    SOURCE_LOG_POS=0;
+    SOURCE_AUTO_POSITION = 1;
 START REPLICA;
 
 -- Connect to DB3
@@ -56,6 +54,8 @@ STOP REPLICA IO_THREAD;
 SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
 
 -- Connect to DB1
+STOP REPLICA IO_THREAD;
+SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
 STOP REPLICA;
 RESET MASTER;
 

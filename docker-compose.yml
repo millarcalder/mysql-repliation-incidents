@@ -14,7 +14,7 @@ services:
     container_name: db1
     image: mysql:8.0
     restart: always
-    command: --log-replica-updates=OFF
+    command: --log-replica-updates=OFF --gtid-mode=ON --enforce-gtid-consistency=ON
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: library
@@ -32,7 +32,7 @@ services:
     container_name: db2
     image: mysql:8.0
     restart: always
-    command: --log-replica-updates=OFF
+    command: --log-replica-updates=OFF --gtid-mode=ON --enforce-gtid-consistency=ON
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: library
@@ -50,7 +50,7 @@ services:
     container_name: db3
     image: mysql:8.0
     restart: always
-    command: --log-replica-updates=OFF
+    command: --log-replica-updates=OFF --gtid-mode=ON --enforce-gtid-consistency=ON
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: library
