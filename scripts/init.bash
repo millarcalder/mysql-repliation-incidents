@@ -3,6 +3,8 @@ mysql -u root -psecret -h db1 -P 3306 -e " \
 SET GLOBAL server_id = 11; \
 CREATE USER 'replica' IDENTIFIED WITH sha256_password BY 'secret'; \
 GRANT REPLICATION SLAVE ON *.* TO 'replica'; \
+CREATE USER 'someone'@'%' IDENDIFIED BY 'secret'; \
+GRANT ALL PRIVILEGES ON library.* TO 'someone'@'%'; \
 "
 
 # Initial data
@@ -13,6 +15,7 @@ replication_servers=(2 3)
 for replica in ${replication_servers[@]}; do
     mysql -u root -psecret -h db$replica -P 3306 -e " \
     SET GLOBAL server_id = 1$replica; \
+    SET GLOBAL read_only = 1; \
     CHANGE REPLICATION SOURCE TO \
         SOURCE_HOST='db1', \
         SOURCE_USER='replica', \
