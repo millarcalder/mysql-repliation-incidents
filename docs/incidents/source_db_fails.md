@@ -11,21 +11,26 @@ Uh oh your source database is down! Don't worry, it's easy to replace it with on
 ![incident](../diagrams/incident_1.svg)
 
 ```sql
--- Connect to DB3
-STOP REPLICA IO_THREAD;
-SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
-
 -- Connect to DB2
 STOP REPLICA IO_THREAD;
 SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
 STOP REPLICA;
-RESET MASTER;
+RESET REPLICA;
+
+-- Connect to DB3
+STOP REPLICA IO_THREAD;
+SHOW PROCESSLIST;
+STOP REPLICA;
+RESET REPLICA;
+
+-- Configure DNS for the primary server to DB2 --
 
 -- Connect to DB3
 CHANGE REPLICATION SOURCE TO
     SOURCE_HOST='db2',
     SOURCE_USER='replica',
-    SOURCE_PASSWORD='secret';
+    SOURCE_PASSWORD='secret',
+	SOURCE_AUTO_POSITION = 1;
 START REPLICA;
 ```
 
@@ -42,6 +47,8 @@ It's easy to configure your old source database as a replica. But maybe your old
 
 ```sql
 -- Connect to DB1
+STOP REPLICA;
+RESET REPLICA;
 CHANGE REPLICATION SOURCE TO
     SOURCE_HOST='db2',
     SOURCE_USER='replica',
@@ -49,27 +56,37 @@ CHANGE REPLICATION SOURCE TO
     SOURCE_AUTO_POSITION = 1;
 START REPLICA;
 
--- Connect to DB3
-STOP REPLICA IO_THREAD;
-SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
+-- Wait for DB1 to catch up --
 
 -- Connect to DB1
 STOP REPLICA IO_THREAD;
 SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
 STOP REPLICA;
-RESET MASTER;
+RESET REPLICA;
+
+-- Connect to DB2
+STOP REPLICA;
+RESET REPLICA;
+
+-- Connect to DB3
+STOP REPLICA IO_THREAD;
+SHOW PROCESSLIST;  -- Check for: Replica has read all relay log;
+STOP REPLICA;
+RESET REPLICA;
 
 -- Connect to DB2
 CHANGE REPLICATION SOURCE TO
     SOURCE_HOST='db1',
     SOURCE_USER='replica',
-    SOURCE_PASSWORD='secret';
+    SOURCE_PASSWORD='secret',
+    SOURCE_AUTO_POSITION = 1;
 START REPLICA;
 
 -- Connect to DB3
 CHANGE REPLICATION SOURCE TO
     SOURCE_HOST='db1',
     SOURCE_USER='replica',
-    SOURCE_PASSWORD='secret';
+    SOURCE_PASSWORD='secret',
+    SOURCE_AUTO_POSITION = 1;
 START REPLICA;
 ```
