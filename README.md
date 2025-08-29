@@ -4,7 +4,9 @@
 
 > A simple MySQL cluster as shown in the diagram below is run using docker compose and there is documentation on how to simulate some incidents and how to resolve them.
 
-![mysql cluster](docs/diagrams/mysql_cluster.svg)
+<p align="center">
+    <img src="docs/diagrams/mysql_cluster.svg" alt="MySQL Cluster Diagram" width="250">
+</p>
 
 ## Getting Started
 

@@ -3,7 +3,7 @@ mysql -u root -psecret -h db1 -P 3306 -e " \
 SET GLOBAL server_id = 11; \
 CREATE USER 'replica' IDENTIFIED WITH sha256_password BY 'secret'; \
 GRANT REPLICATION SLAVE ON *.* TO 'replica'; \
-CREATE USER 'someone'@'%' IDENDIFIED BY 'secret'; \
+CREATE USER 'someone'@'%' IDENTIFIED BY 'secret'; \
 GRANT ALL PRIVILEGES ON library.* TO 'someone'@'%'; \
 "
 
