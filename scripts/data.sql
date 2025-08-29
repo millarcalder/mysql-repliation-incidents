@@ -15,8 +15,8 @@ CREATE TABLE users (
 CREATE TABLE users_books (
     user_id INT,
     book_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (book_id) REFERENCES books(id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE,
     PRIMARY KEY (user_id, book_id)
 );
 

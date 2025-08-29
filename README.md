@@ -45,3 +45,4 @@ bash /scripts/init.bash
  - [Source Database Fails](docs/incidents/source_db_fails.md)
  - [TODO: Replica Database Fails](docs/incidents/replica_db_fails.md)
  - [TODO: Out of Sync Data](docs/incidents/out_of_sync_data.md)
+ - [# Restore Subset of Tables from Backup](docs/incidents/restore_backup_subset_of_tables.md)
