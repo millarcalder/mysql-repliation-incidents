@@ -1,6 +1,3 @@
 FROM ubuntu:latest
 
-RUN apt update && apt install -y mysql-client
-
-COPY scripts/init.bash /scripts/init.bash
-COPY scripts/data.sql /scripts/data.sql
+RUN apt update && apt install -y mysql-client mydumper

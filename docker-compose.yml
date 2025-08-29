@@ -8,6 +8,8 @@ services:
     container_name: dev
     networks:
       - mysql-cluster
+    volumes:
+      - ./scripts:/scripts
     command: 'sh -c "echo \"Container started\" && while sleep 1; do :; done"'
 
   db1:
